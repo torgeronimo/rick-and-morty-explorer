@@ -1,9 +1,15 @@
-import React from 'react'
+import { Episode } from '../types'
 
-const EpisodeCard = () => {
+interface EpisodeCardProps {
+    episode: Episode;
+}
+const EpisodeCard = ({ episode }: EpisodeCardProps) => {
     return (
-        <div className="episode-card flex justify-center items-center h-50 w-50 bg-gray-200 rounded-lg shadow-md p-4">
-            <h2 className="text-lg font-bold  text-black">Episode Card</h2>
+        <div className="episode-card h-46 w-64 bg-gray-900 rounded-lg shadow-md p-4 flex justify-center flex-col">
+            <h2 className="text-lg font-bold text-white">{episode.name}</h2>
+            <p className="text-sm text-gray-300">{episode.episode}</p>
+            <p className="text-sm text-gray-300">{episode.air_date}</p>
+            <p className="text-sm text-gray-300">{episode.characters.length} characters appeared</p>
         </div>
     )
 }
