@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Characters from './pages/Characters';
 import Episodes from './pages/Episodes';
 import Locations from './pages/Locations';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
     {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
             { path: '/characters', element: <Characters /> },
             { path: '/episodes', element: <Episodes /> },
             { path: '/locations', element: <Locations /> },
+            { path: '*', element: <NotFound />},
         ],
     },
 ]);
