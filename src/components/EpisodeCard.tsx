@@ -1,5 +1,6 @@
 import { Episode } from '../types'
 
+
 interface EpisodeCardProps {
     episode: Episode;
 }

@@ -1,11 +1,12 @@
 import Card from "./CharacterCard";
 import { useCharacters } from "../hooks/useCharacters";
 import { Character } from "../types";
+import Spinner from "./ui/Spinner";
 
 const CharacterList = () => {
     const { characters, loading, error } = useCharacters();
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Spinner />;
     if (error) return <p>Error: {error}</p>;
 
     return (
