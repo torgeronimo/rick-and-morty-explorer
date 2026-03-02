@@ -1,30 +1,38 @@
 import { useState, useEffect } from 'react';
 import { fetchLocations } from '../services/api';
-import type { Location } from '../types';
+import type { LocationParams } from '../services/api';
+import type { Location, ApiInfo } from '../types';
 
-export const useLocation = () => {
+const emptyInfo: ApiInfo = { count: 0, pages: 0, next: null, prev: null };
+
+export const useLocation = (params?: LocationParams) => {
     const [location, setLocation] = useState<Location[]>([]);
+    const [info, setInfo] = useState<ApiInfo>(emptyInfo);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(()=>{
-        const getLocation = async () => {
-            try {
-                const data = await fetchLocations();
-                setLocation(data);
-                console.log('Fetched location:', data); // Debug log
-            } catch (err: unknown) {
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError('An unknown error occurred');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+    useEffect(() => {
+        let cancelled = false;
+        setLoading(true);
+        setError(null);
 
-        getLocation();
-    }, []);
-    return { location, loading, error };
-}
+        fetchLocations(params)
+            .then(({ results, info }) => {
+                if (cancelled) return;
+                setLocation(results);
+                setInfo(info);
+            })
+            .catch((err: unknown) => {
+                if (cancelled) return;
+                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(params)]);
+
+    return { location, info, loading, error };
+};
