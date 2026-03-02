@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import Card from './LocationCard';
+import LocationModal from './LocationModal';
 import Spinner from './ui/Spinner';
 import Pagination from './ui/Pagination';
 import { useLocation } from '../hooks/useLocation';
@@ -11,6 +12,7 @@ const LocationList = () => {
     const [search, setSearch] = useState('');
     const [perPage, setPerPage] = useState<10 | 20>(20);
     const [clientPage, setClientPage] = useState(1);
+    const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
     const itemsPerApiPage = 20;
     const subPagesPerApiPage = itemsPerApiPage / perPage;
@@ -39,7 +41,7 @@ const LocationList = () => {
     };
 
     return (
-        <div>
+        <>
             {/* Controls */}
             <div className="flex flex-wrap gap-3 mb-6">
                 <input
@@ -75,7 +77,7 @@ const LocationList = () => {
             ) : (
                 <div className="location-list flex flex-wrap gap-6 justify-center">
                     {displayedLocations.map((loc: Location) => (
-                        <Card key={loc.id} location={loc} />
+                        <Card key={loc.id} location={loc} onClick={() => setSelectedLocation(loc)} />
                     ))}
                 </div>
             )}
@@ -85,7 +87,11 @@ const LocationList = () => {
                 totalPages={totalClientPages}
                 onPageChange={setClientPage}
             />
-        </div>
+
+            {selectedLocation && (
+                <LocationModal location={selectedLocation} onClose={() => setSelectedLocation(null)} />
+            )}
+        </>
     );
 };
 

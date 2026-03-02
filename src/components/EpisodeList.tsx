@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import Card from "./EpisodeCard";
+import EpisodeModal from "./EpisodeModal";
 import Spinner from "./ui/Spinner";
 import Pagination from "./ui/Pagination";
 import { useEpisodes } from "../hooks/useEpisode";
@@ -13,6 +14,7 @@ const EpisodeList = () => {
     const [season, setSeason] = useState('');
     const [perPage, setPerPage] = useState<10 | 20>(20);
     const [clientPage, setClientPage] = useState(1);
+    const [selectedEpisode, setSelectedEpisode] = useState<Episode | null>(null);
 
     const itemsPerApiPage = 20;
     const subPagesPerApiPage = itemsPerApiPage / perPage;
@@ -42,7 +44,7 @@ const EpisodeList = () => {
     };
 
     return (
-        <div>
+        <>
             {/* Controls */}
             <div className="flex flex-wrap gap-3 mb-6">
                 <input
@@ -88,7 +90,7 @@ const EpisodeList = () => {
             ) : (
                 <div className="episode-list flex flex-wrap gap-6 justify-center">
                     {displayedEpisodes.map((episode: Episode) => (
-                        <Card key={episode.id} episode={episode} />
+                        <Card key={episode.id} episode={episode} onClick={() => setSelectedEpisode(episode)} />
                     ))}
                 </div>
             )}
@@ -98,7 +100,10 @@ const EpisodeList = () => {
                 totalPages={totalClientPages}
                 onPageChange={setClientPage}
             />
-        </div>
+        {selectedEpisode && (
+            <EpisodeModal episode={selectedEpisode} onClose={() => setSelectedEpisode(null)} />
+        )}
+        </>
     );
 };
 

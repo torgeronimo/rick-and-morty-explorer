@@ -53,6 +53,15 @@ export const fetchEpisodes = async (
     return { results: data.results as Episode[], info: data.info as ApiInfo };
 };
 
+export const fetchCharactersByIds = async (ids: number[]): Promise<Character[]> => {
+    if (ids.length === 0) return [];
+    const response = await fetch(`${BASE_URL}/character/${ids.join(',')}`);
+    if (!response.ok) throw new Error('Failed to fetch characters by ids');
+    const data = await response.json();
+    // API returns a single object when only 1 ID is requested
+    return (Array.isArray(data) ? data : [data]) as Character[];
+};
+
 export const fetchLocations = async (
     params?: LocationParams
 ): Promise<{ results: Location[]; info: ApiInfo }> => {
