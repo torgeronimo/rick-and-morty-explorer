@@ -1,6 +1,6 @@
-const BASE_URL = 'https://rickandmortyapi.com/api';
-
 import type { Character, Episode, Location, ApiInfo } from "../types";
+
+const BASE_URL = '/api';
 
 const emptyInfo: ApiInfo = { count: 0, pages: 0, next: null, prev: null };
 

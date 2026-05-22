@@ -1,11 +1,10 @@
 import { useState, useMemo } from 'react';
 import Card from './LocationCard';
 import LocationModal from './LocationModal';
-import Spinner from './ui/Spinner';
 import Pagination from './ui/Pagination';
 import { useLocation } from '../hooks/useLocation';
 import { Location } from '../types';
-
+import Spinner from './ui/Spinner'
 const PER_PAGE_OPTIONS = [10, 20] as const;
 
 const LocationList = () => {

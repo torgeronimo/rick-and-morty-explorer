@@ -15,6 +15,10 @@ const Footer = () => {
                     </a>
                 </p>
                 <p>© {new Date().getFullYear()} Rick and Morty Explorer</p>
+                <div className="flex gap-4 mt-2">
+                    <img src="/src/assets/github.svg" alt="GitHub Repository" className="w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => window.open('https://github.com/torgeronimo', '_blank')} />
+                    <img src="/src/assets/linkedin.svg" alt="LinkedIn Profile" className="w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => window.open('https://www.linkedin.com/in/vgmdelacruz', '_blank')} />
+                </div>
             </div>
         </footer>
     )

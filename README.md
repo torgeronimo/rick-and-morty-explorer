@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Rick and Morty Explorer 🛸
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive web app for browsing characters, episodes, and locations from the *Rick and Morty* universe, powered by the [Rick and Morty API](https://rickandmortyapi.com/).
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Characters** — Browse all characters with filters by name, status, species, and gender
+- **Episodes** — Explore every episode with search by name or episode code, plus a detail modal
+- **Locations** — Discover locations with filters by name, type, and dimension, plus a detail modal
+- **Featured Character** — Random featured character spotlight on the home page
+- **Pagination** — Full pagination across all listing pages
+- **404 Page** — Custom "lost in the multiverse" error page
+- **Responsive Design** — Works on desktop, tablet, and mobile
 
-## React Compiler
+## 🧱 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Category | Technology |
+|----------|------------|
+| Framework | [React 19](https://react.dev/) |
+| Language | [TypeScript](https://www.typescriptlang.org/) |
+| Bundler | [Vite 7](https://vite.dev/) |
+| Routing | [React Router 7](https://reactrouter.com/) |
+| Data Fetching | [TanStack Query](https://tanstack.com/query) + custom hooks |
+| Styling | [Tailwind CSS 4](https://tailwindcss.com/) + [Sass](https://sass-lang.com/) |
+| Linting | [ESLint](https://eslint.org/) with TypeScript & React plugins |
+| API | [Rick and Morty API](https://rickandmortyapi.com/) (proxied via Vite) |
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- [Node.js](https://nodejs.org/) (v18 or later)
+- npm (ships with Node)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/torgeronimo/rick-and-morty-explorer.git
+cd rick-and-morty-explorer
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Opens at `http://localhost:5173` with HMR (hot module replacement).
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── layout/          # Layout, NavBar, Footer
+│   ├── ui/              # Pagination, Spinner
+│   ├── CharacterCard.tsx
+│   ├── CharacterList.tsx
+│   ├── EpisodeCard.tsx
+│   ├── EpisodeList.tsx
+│   ├── EpisodeModal.tsx
+│   ├── LocationCard.tsx
+│   ├── LocationList.tsx
+│   └── LocationModal.tsx
+├── hooks/               # useCharacters, useEpisode, useLocation
+├── pages/
+│   ├── Home.tsx
+│   ├── Characters.tsx
+│   ├── Episodes.tsx
+│   ├── Locations.tsx
+│   ├── NotFound.tsx
+│   └── sections/        # Hero, FeaturedCharacter, About
+├── services/
+│   └── api.ts           # API service layer
+├── styles/              # Global styles (Tailwind + Sass)
+├── types.ts             # Shared TypeScript interfaces
+└── router.tsx           # Route definitions
+```
+
+## 🔌 API Proxy
+
+API requests are proxied through Vite's dev server (`/api` → `https://rickandmortyapi.com/api`) to avoid CORS issues during development. No API key is required.
+
+
+Built with ☕ and a love for dimension C-137.

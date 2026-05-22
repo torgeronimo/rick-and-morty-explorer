@@ -1,5 +1,3 @@
-import React from 'react'
-
 const FeaturedCharacter = () => {
     return (
         <div className='max-w-7xl h-screen mx-auto px-4 py-6 flex items-center justify-center flex-col gap-4'>
