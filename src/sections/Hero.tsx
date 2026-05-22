@@ -1,4 +1,5 @@
 import Particles from '../components/ui/Particles';
+import logo from '../assets/logo.svg';
 import portal from '../assets/portal.png';
 import ship from '../assets/ship.svg';
 
@@ -8,7 +9,7 @@ const Hero = () => {
             <div className='w-full h-screen relative'>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="flex flex-col justify-center items-center">
-                        <img src="../src/assets/logo.svg" alt="Rick and Morty Logo" className="w-150 h-auto mb-8" />
+                        <img src={logo} alt="Rick and Morty Logo" className="w-150 h-auto mb-8" />
                         <div className="relative w-80 h-80 flex items-center justify-center">
                         <img 
                             src={portal} 
