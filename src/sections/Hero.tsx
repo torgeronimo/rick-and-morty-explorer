@@ -1,4 +1,6 @@
 import Particles from '../components/ui/Particles';
+import portal from '../assets/portal.png';
+import ship from '../assets/ship.svg';
 
 const Hero = () => {
     return (
@@ -9,13 +11,13 @@ const Hero = () => {
                         <img src="../src/assets/logo.svg" alt="Rick and Morty Logo" className="w-150 h-auto mb-8" />
                         <div className="relative w-80 h-80 flex items-center justify-center">
                         <img 
-                            src="../src/assets/portal.png" 
+                            src={portal} 
                             alt="Rick and Morty Portal" 
                             className="absolute w-full h-full object-contain" 
                             style={{ animation: 'portal-spin 10s linear infinite' }}
                         />
                         <img 
-                            src="../src/assets/ship.svg" 
+                            src={ship} 
                             alt="Rick and Morty Ship" 
                             className="absolute w-60 h-60 object-contain z-10" 
                             style={{ animation: 'ship-fly 4s ease-in-out infinite' }}
