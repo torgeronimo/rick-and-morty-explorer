@@ -1,6 +1,7 @@
 import type { Character, Episode, Location, ApiInfo } from "../types";
 
-const BASE_URL = '/api';
+// Use environment variable in production (Vercel) or local proxy in development
+const BASE_URL = import.meta.env.DEV ? '/api' : 'https://rickandmortyapi.com/api';
 
 const emptyInfo: ApiInfo = { count: 0, pages: 0, next: null, prev: null };
 
