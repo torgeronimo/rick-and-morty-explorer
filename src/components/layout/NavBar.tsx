@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 
 const navLinks = [
@@ -10,17 +10,7 @@ const navLinks = [
 ]
 
 const NavBar = () => {
-    const [query, setQuery] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
-    const navigate = useNavigate()
-
-    const handleSearch = (e: { preventDefault: () => void }) => {
-        e.preventDefault()
-        if (query.trim()) {
-        navigate(`/search?q=${encodeURIComponent(query.trim())}`)
-        setQuery('')
-        }
-    }
 
     return (
         <nav className="bg-gray-900 border-b border-green-500/30 sticky top-0 z-50">
@@ -51,23 +41,6 @@ const NavBar = () => {
                     </li>
                 ))}
                 </ul>
-
-                {/* Search bar */}
-                <form onSubmit={handleSearch} className="hidden md:flex items-center gap-2">
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="bg-gray-800 text-gray-200 placeholder-gray-500 border border-gray-700 rounded-md px-3 py-1.5 text-sm w-48 focus:outline-none focus:border-green-500 transition-colors"
-                />
-                <button
-                    type="submit"
-                    className="bg-green-500 hover:bg-green-400 text-white font-semibold text-sm px-3 py-1.5 rounded-md transition-colors"
-                >
-                    Search
-                </button>
-                </form>
 
                 {/* Mobile menu button */}
                 <button
@@ -105,21 +78,6 @@ const NavBar = () => {
                     {label}
                     </NavLink>
                 ))}
-                <form onSubmit={handleSearch} className="flex gap-2 mt-1">
-                    <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="flex-1 bg-gray-800 text-gray-200 placeholder-gray-500 border border-gray-700 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500 transition-colors"
-                    />
-                    <button
-                    type="submit"
-                    className="bg-green-500 hover:bg-green-400 text-gray-900 font-semibold text-sm px-3 py-1.5 rounded-md transition-colors"
-                    >
-                    Search
-                    </button>
-                </form>
                 </div>
             )}
         </nav>

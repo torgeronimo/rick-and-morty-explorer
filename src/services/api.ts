@@ -1,33 +1,73 @@
-const BASE_URL = 'https://rickandmortyapi.com/api';
+import type { Character, Episode, Location, ApiInfo } from "../types";
 
-import type { Character } from "../types";
-import type { Episode } from "../types";
-import type { Location } from "../types";
+const BASE_URL = '/api';
 
-export const fetchCharacters = async (): Promise<Character[]> => {
-    const reponse = await fetch(`${BASE_URL}/character`);
-    if (!reponse.ok) {
-        throw new Error('Failed to fetch characters');
-    }
-    const data = await reponse.json();
-    // spell the API response type if needed, but we know results is an array of Character
-    return data.results as Character[];
+const emptyInfo: ApiInfo = { count: 0, pages: 0, next: null, prev: null };
+
+function buildQuery(params: Record<string, string | number | undefined>): string {
+    const query = Object.entries(params)
+        .filter(([, v]) => v !== undefined && v !== '')
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+        .join('&');
+    return query ? `?${query}` : '';
 }
 
-export const fetchEpisodes = async (): Promise<Episode[]> => {
-    const response = await fetch(`${BASE_URL}/episode`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch episodes');
-    }
+export interface CharacterParams {
+    page?: number;
+    name?: string;
+    status?: string;
+    species?: string;
+    gender?: string;
+}
+
+export interface EpisodeParams {
+    page?: number;
+    name?: string;
+    episode?: string;
+}
+
+export interface LocationParams {
+    page?: number;
+    name?: string;
+    type?: string;
+    dimension?: string;
+}
+
+export const fetchCharacters = async (
+    params?: CharacterParams
+): Promise<{ results: Character[]; info: ApiInfo }> => {
+    const response = await fetch(`${BASE_URL}/character${buildQuery({ ...params })}`);
+    if (response.status === 404) return { results: [], info: emptyInfo };
+    if (!response.ok) throw new Error('Failed to fetch characters');
     const data = await response.json();
-    return data.results as Episode[]; // You can type this as needed
-}
+    return { results: data.results as Character[], info: data.info as ApiInfo };
+};
 
-export const fetchLocations = async (): Promise<Location[]> => {
-    const response = await fetch(`${BASE_URL}/location`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch locations');
-    }
+export const fetchEpisodes = async (
+    params?: EpisodeParams
+): Promise<{ results: Episode[]; info: ApiInfo }> => {
+    const response = await fetch(`${BASE_URL}/episode${buildQuery({ ...params })}`);
+    if (response.status === 404) return { results: [], info: emptyInfo };
+    if (!response.ok) throw new Error('Failed to fetch episodes');
     const data = await response.json();
-    return data.results as Location[]; // You can type this as needed
-}
+    return { results: data.results as Episode[], info: data.info as ApiInfo };
+};
+
+export const fetchCharactersByIds = async (ids: number[]): Promise<Character[]> => {
+    if (ids.length === 0) return [];
+    const response = await fetch(`${BASE_URL}/character/${ids.join(',')}`);
+    if (!response.ok) throw new Error('Failed to fetch characters by ids');
+    const data = await response.json();
+    // API returns a single object when only 1 ID is requested
+    return (Array.isArray(data) ? data : [data]) as Character[];
+};
+
+export const fetchLocations = async (
+    params?: LocationParams
+): Promise<{ results: Location[]; info: ApiInfo }> => {
+    const response = await fetch(`${BASE_URL}/location${buildQuery({ ...params })}`);
+    if (response.status === 404) return { results: [], info: emptyInfo };
+    if (!response.ok) throw new Error('Failed to fetch locations');
+    const data = await response.json();
+    return { results: data.results as Location[], info: data.info as ApiInfo };
+};
